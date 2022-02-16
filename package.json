@@ -1,13 +1,14 @@
 {
   "name": "mood",
+  "entry": "./client/index.js",
   "version": "1.0.0",
   "description": "witty instagram quotes from your favorite rappers",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"NODE_ENV=production\" \"node server/server.js\"",
     "build": "webpack -w",
-    "start": "nodemon server/server.js",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --inline --progress --colors --watch --content-base ./\" \"nodemon ./server/server.js\""
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"cross-env NODE_ENV=development nodemon server/server.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,11 @@
   "dependencies": {
     "@babel/plugin-transform-async-to-generator": "^7.16.8",
     "@babel/runtime": "^7.17.2",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.4.2",
+    "@mui/material": "^5.4.2",
+    "babel": "^6.23.0",
     "cross-env": "^7.0.3",
     "express": "^4.17.2",
     "react": "^17.0.2",
@@ -22,8 +28,7 @@
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.3",
-    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/core": "^7.17.4",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "babel-core": "^6.26.3",
@@ -32,13 +37,13 @@
     "css-loader": "^6.6.0",
     "eslint": "^8.9.0",
     "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.15",
     "sass": "^1.49.7",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.69.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4",
-    "webpack-html-plugin": "^0.1.1"
+    "webpack-dev-server": "^4.7.4"
   }
 }
