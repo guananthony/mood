@@ -34,12 +34,18 @@ module.exports = {
 		}),
 	],
 	devServer: {
+		port: 8080,
+		hot: true,
+		open: true,
 		static: {
 			publicPath: '/dist',
 			directory: path.resolve(__dirname, '/dist'),
 		},
 		proxy: {
-			'/api': 'http://localhost:3000',
+			'/api/*': {
+				changeOrigin: true,
+				target: 'http://localhost:3000',
+			},
 		},
 	},
 };

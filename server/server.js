@@ -3,6 +3,9 @@ const express = require('express');
 
 const app = express();
 
+// import routers
+const captionRouter = require('./routes/captionRouter');
+
 // run the server on 3000
 const PORT = 3000;
 
@@ -14,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // CONTROLLERS GO HERE
+app.use('/api/captions', captionRouter);
 
 // catch-all route handler
 app.use((req, res) =>
