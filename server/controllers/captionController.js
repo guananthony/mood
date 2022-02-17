@@ -37,6 +37,28 @@ captionController.addCaption = async (req, res, next) => {
 		// const annotations = [
 		// 	data.data.response.annotation.body.dom.children[2].children[0],
 		// ];
+		console.log(
+			data.data.response.annotation.body.dom.children
+				.filter(
+					(el) =>
+						el.hasOwnProperty('children') && typeof el.children[0] === 'string'
+				)
+				.map((el) => el.children[0])
+		);
+		const annotations = data.data.response.annotation.body.dom.children
+			.filter(
+				(el) =>
+					el.hasOwnProperty('children') && typeof el.children[0] === 'string'
+			)
+			.map((el) => el.children[0]);
+		// const annotations = data.data.response.annotation.body.dom.children.filter(
+		// 	(el) => el.children[0] !== undefined && typeof el.children[0] === 'string'
+		// );
+		// const annotations = data.data.response.annotation.body.dom.children
+		// 	.filter((el) => {
+		// 		return el.children[0] && typeof el.children[0] === 'string';
+		// 	})
+		// 	.map((el) => el.children[0]);
 		const shareUrl = data.data.response.annotation.share_url;
 		const songTitle = data.data.response.referent.annotatable.title;
 		const artist = data.data.response.referent.annotatable.context;
@@ -46,7 +68,7 @@ captionController.addCaption = async (req, res, next) => {
 			annotationId,
 			mood,
 			lyric,
-			// annotations,
+			annotations,
 			shareUrl,
 			songTitle,
 			artist,

@@ -19,9 +19,12 @@ function CaptionFeed() {
 	const captionList = captions.map((caption) => {
 		return (
 			<CaptionCard
-				lyric={caption.lyric}
 				key={caption._id}
-				annotation={caption.annotations[0]}
+				mood={caption.mood}
+				lyric={caption.lyric}
+				annotations={caption.annotations}
+				artist={caption.artist}
+				xs={{ my: 2 }}
 			/>
 		);
 	});

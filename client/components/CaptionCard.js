@@ -5,6 +5,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const bull = (
 	<Box
@@ -15,7 +17,7 @@ const bull = (
 	</Box>
 );
 
-const card = (lyric, annotation) => (
+const card = (lyric, annotations, artist, mood) => (
 	<React.Fragment>
 		<CardContent>
 			<Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
@@ -24,17 +26,18 @@ const card = (lyric, annotation) => (
 			<Typography variant='h5' component='div'>
 				{lyric}
 			</Typography>
-			<Typography sx={{ mb: 1.5 }} color='text.secondary'>
-				{annotation}
+			<Typography variant='caption' sx={{ mb: 1.5 }} color='text.secondary'>
+				{annotations[0]}
 			</Typography>
-			<Typography variant='body2'>
-				well meaning and kindly.
-				<br />
-				{'"a benevolent smile"'}
-			</Typography>
+			<Typography variant='subtitle1'>{artist}</Typography>
 		</CardContent>
-		<CardActions>
-			<Button size='small'>Learn More</Button>
+		<CardActions display='flex' style={{ justifyContent: 'center' }}>
+			<Button variant='outlined' size='small'>
+				{mood}
+			</Button>
+			<IconButton>
+				<DeleteIcon />
+			</IconButton>
 		</CardActions>
 	</React.Fragment>
 );
@@ -42,7 +45,9 @@ const card = (lyric, annotation) => (
 function CaptionCard(props) {
 	return (
 		<Box sx={{ minWidth: 275 }}>
-			<Card variant='outlined'>{card(props.lyric, props.annotation)}</Card>
+			<Card variant='outlined'>
+				{card(props.lyric, props.annotations, props.artist, props.mood)}
+			</Card>
 		</Box>
 	);
 }

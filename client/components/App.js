@@ -29,7 +29,7 @@ function App() {
 					</Grid>
 					<Grid item xs={4}>
 						<Item>
-							<CaptionFeed />
+							<AddCaption />
 						</Item>
 					</Grid>
 				</Grid>
