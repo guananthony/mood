@@ -72,6 +72,7 @@ captionController.deleteCaption = (req, res, next) => {
 	Caption.deleteOne({ _id: id })
 		.then(() => {
 			console.log('Data deleted');
+			return next();
 		})
 		.catch((e) => {
 			return next({

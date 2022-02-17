@@ -10,10 +10,15 @@ import {
 	Radio,
 	Typography,
 } from '@mui/material';
+import { syncCaptions } from '../features/caption/captionSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 function AddCaption() {
 	const [annotationId, setAnnotationId] = useState('');
 	const [mood, setMood] = useState('');
+
+	// REDUX TOOLKIT
+	const dispatch = useDispatch();
 
 	function handleTextFieldChange(e) {
 		setAnnotationId(e.target.value);
@@ -34,6 +39,8 @@ function AddCaption() {
 				annotationId,
 				mood,
 			}),
+		}).then((response) => {
+			dispatch(syncCaptions());
 		});
 		setAnnotationId('');
 		setMood('');
@@ -99,7 +106,11 @@ function AddCaption() {
 							label='keeping it real'
 						/>
 					</RadioGroup>
-					<Button type='submit' variant='contained'>
+					<Button
+						type='submit'
+						variant='contained'
+						// onClick={() => dispatch(syncCaptions())}
+					>
 						add
 					</Button>
 				</Box>
@@ -107,4 +118,5 @@ function AddCaption() {
 		</>
 	);
 }
+
 export default AddCaption;
