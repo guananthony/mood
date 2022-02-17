@@ -30,22 +30,6 @@ export const deleteCaption = createAsyncThunk(
 	}
 );
 
-// export const filter = createAsyncThunk(
-// 	'captions/syncCaptionsStatus',
-// 	async (input) => {
-// 		try {
-// 			console.log('in the syncCaptions Thunk function');
-// 			const response = await axios.get('/api/captions', {
-// 				method: 'GET',
-// 			});
-// 			console.log('Here is your data: ', response);
-// 			return response.data.filter((el) => el.name == filter);
-// 		} catch (e) {
-// 			console.log(e);
-// 		}
-// 	}
-// );
-
 const initialState = {
 	captions: [],
 	filter: '',
@@ -54,8 +38,8 @@ const initialState = {
 export const captionSlice = createSlice({
 	name: 'caption',
 	initialState,
-	reducer: {
-		changeFilterTo: (state, action) => {
+	reducers: {
+		setFilter: (state, action) => {
 			state.filter = action.payload;
 		},
 	},
@@ -67,11 +51,17 @@ export const captionSlice = createSlice({
 				console.log(action.payload);
 				state.captions = action.payload;
 			})
+			// .addCase(filterCaptions.fulfilled, (state, action) => {
+			// 	console.log('In filterCaptions reducer');
+			// 	state.captions = action.payload
+			// })
 			.addCase(deleteCaption.fulfilled, (state, action) => {
 				// console.log(action.payload);
 				// state.captions = action.payload;
 			});
 	},
 });
+
+export const { setFilter } = captionSlice.actions;
 
 export default captionSlice.reducer;

@@ -7,12 +7,19 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ButtonGroup } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setFilter } from '../features/caption/captionSlice';
 
 function Header() {
+	const dispatch = useDispatch();
+
 	return (
 		<>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position='static' style={{ backgroundColor: '#9e9e9e' }}>
+				<AppBar
+					position='static'
+					style={{ backgroundColor: '#bdbdbd', color: 'black' }}
+				>
 					<Typography variant='h1' sx={{ flexGrow: 1 }} textAlign='center'>
 						mood
 					</Typography>
@@ -29,6 +36,7 @@ function Header() {
 							color: 'white',
 							border: '#ef9a9a',
 						}}
+						onClick={(e) => dispatch(setFilter('in my feelings'))}
 					>
 						In My Feelings
 					</Button>
@@ -38,6 +46,7 @@ function Header() {
 							color: 'white',
 							border: '#7986cb',
 						}}
+						onClick={(e) => dispatch(setFilter('on the grind'))}
 					>
 						On The Grind
 					</Button>
@@ -47,6 +56,7 @@ function Header() {
 							color: 'white',
 							border: '#90caf9',
 						}}
+						onClick={(e) => dispatch(setFilter('lost in thought'))}
 					>
 						Lost In Thought
 					</Button>
@@ -56,6 +66,7 @@ function Header() {
 							color: 'white',
 							border: '#80cbc4',
 						}}
+						onClick={(e) => dispatch(setFilter('feeling myself'))}
 					>
 						Feeling Myself
 					</Button>
@@ -65,6 +76,7 @@ function Header() {
 							color: 'white',
 							border: '#a1887f',
 						}}
+						onClick={(e) => dispatch(setFilter('keeping it real'))}
 					>
 						Keeping It Real
 					</Button>

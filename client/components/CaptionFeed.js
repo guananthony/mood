@@ -7,6 +7,7 @@ function CaptionFeed() {
 	// const [captions, setCaptions] = useState([]);
 
 	const captions = useSelector((state) => state.captions.captions);
+	const moodFilter = useSelector((state) => state.captions.filter);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -14,31 +15,45 @@ function CaptionFeed() {
 		dispatch(syncCaptions());
 	}, []);
 
-	// useEffect(() => {
-	// 	fetch('/api/captions', {
-	// 		method: 'GET',
-	// 	})
-	// 		.then((res) => res.json())
-	// 		.then((data) => {
-	// 			setCaptions(data.reverse());
-	// 			console.log(captions);
-	// 		})
-	// 		.catch((e) => console.log(e));
-	// }, [captions.length]);
+	const captionList = captions
+		.filter((caption) => {
+			if (moodFilter) {
+				return caption.mood.toLowerCase() === moodFilter;
+			} else {
+				return true;
+			}
+		})
+		.map((caption) => {
+			return (
+				<CaptionCard
+					key={caption._id}
+					id={caption._id}
+					mood={caption.mood}
+					lyric={caption.lyric}
+					annotations={caption.annotations}
+					artist={caption.artist}
+					shareUrl={caption.shareUrl}
+				/>
+			);
+		});
 
-	const captionList = captions.map((caption) => {
-		return (
-			<CaptionCard
-				key={caption._id}
-				id={caption._id}
-				mood={caption.mood}
-				lyric={caption.lyric}
-				annotations={caption.annotations}
-				artist={caption.artist}
-				shareUrl={caption.shareUrl}
-			/>
-		);
-	});
+	// if (moodFilter) {
+	// 	const captionList = captions
+	// 		.filter((caption) => caption.mood.toLowerCase() === moodFilter)
+	// 		.map((caption) => {
+	// 			return (
+	// 				<CaptionCard
+	// 					key={caption._id}
+	// 					id={caption._id}
+	// 					mood={caption.mood}
+	// 					lyric={caption.lyric}
+	// 					annotations={caption.annotations}
+	// 					artist={caption.artist}
+	// 					shareUrl={caption.shareUrl}
+	// 				/>
+	// 			);
+	// 		});
+	// }
 
 	return <>{captionList}</>;
 }

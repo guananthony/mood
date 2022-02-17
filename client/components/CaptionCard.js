@@ -59,9 +59,22 @@ const card = (id, lyric, annotations, artist, mood, shareUrl) => {
 				</Typography>
 				<Typography variant='subtitle1'>{artist}</Typography>
 			</CardContent>
-			<CardActions display='flex' style={{ justifyContent: 'center' }}>
-				<Button href={shareUrl} target='_blank' size='small' variant='outlined'>
-					Read More
+			<CardActions
+				display='flex'
+				style={{ justifyContent: 'center', marginTop: '0px' }}
+			>
+				<Button
+					href={shareUrl}
+					target='_blank'
+					size='small'
+					variant='outlined'
+					style={{
+						backgroundColor: '#fff176',
+						color: 'black',
+						border: '1px solid black',
+					}}
+				>
+					genius
 				</Button>
 				<IconButton
 					onClick={() =>
@@ -80,7 +93,7 @@ function CaptionCard(props) {
 
 	return (
 		<Box sx={{ minWidth: 275, my: 2, mx: 1 }}>
-			<Card variant='outlined'>
+			<Card variant='outlined' style={{ backgroundColor: '#bdbdbd' }}>
 				{card(
 					props.id,
 					props.lyric,
