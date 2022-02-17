@@ -13,6 +13,8 @@ router.post('/', captionController.addCaption, (req, res) => {
 });
 
 // save for later
-// router.delete('/:id', captionController.deleteCaption, (req, res) => {});
+router.delete('/:id', captionController.deleteCaption, (req, res) => {
+	res.status(200).send('Caption deleted successfully.');
+});
 
 module.exports = router;

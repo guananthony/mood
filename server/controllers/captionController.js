@@ -11,12 +11,19 @@ captionController.getCaptions = (req, res, next) => {
 			res.locals.captions = captions;
 			return next();
 		})
-		.catch((err) => console.log(err));
+		.catch((e) => {
+			return next({
+				log: 'captionController.getCaptions middleware error: check log for more details',
+				status: 400,
+				message: {
+					err: `${e}`,
+				},
+			});
+		});
 };
 
 // FETCHES info from API, then adds to database
 captionController.addCaption = async (req, res, next) => {
-	// const { annotationId, artist, mood } = req.body;
 	const { annotationId, mood } = req.body;
 	console.log(annotationId);
 	// create an instance of axios
@@ -29,40 +36,18 @@ captionController.addCaption = async (req, res, next) => {
 	try {
 		// parameterize the query here by annotationId
 		const data = await genius.get(`/${annotationId}`);
-		// console.log(data.data.response);
-		// console.log(data.data.response.referent.fragment);
-		// console.log(data.data.response.annotation.body.dom.children[2].children[0]);
 		// destructure the response
 		const lyric = data.data.response.referent.fragment;
-		// const annotations = [
-		// 	data.data.response.annotation.body.dom.children[2].children[0],
-		// ];
-		console.log(
-			data.data.response.annotation.body.dom.children
-				.filter(
-					(el) =>
-						el.hasOwnProperty('children') && typeof el.children[0] === 'string'
-				)
-				.map((el) => el.children[0])
-		);
+		// filter through annotations and grab only text ones
 		const annotations = data.data.response.annotation.body.dom.children
 			.filter(
 				(el) =>
 					el.hasOwnProperty('children') && typeof el.children[0] === 'string'
 			)
 			.map((el) => el.children[0]);
-		// const annotations = data.data.response.annotation.body.dom.children.filter(
-		// 	(el) => el.children[0] !== undefined && typeof el.children[0] === 'string'
-		// );
-		// const annotations = data.data.response.annotation.body.dom.children
-		// 	.filter((el) => {
-		// 		return el.children[0] && typeof el.children[0] === 'string';
-		// 	})
-		// 	.map((el) => el.children[0]);
 		const shareUrl = data.data.response.annotation.share_url;
 		const songTitle = data.data.response.referent.annotatable.title;
 		const artist = data.data.response.referent.annotatable.context;
-		console.log('in the POST middleware');
 
 		res.locals.newCaption = await Caption.create({
 			annotationId,
@@ -78,15 +63,25 @@ captionController.addCaption = async (req, res, next) => {
 		console.log(e);
 		return next();
 	}
-
-	// Caption.create({ annotationId, artist, mood })
-	// 	.then((newCaption) => {
-	// 		res.locals.newCaption = newCaption;
-	// 		return next();
-	// 	})
-	// 	.catch((err) => console.log(err));
 };
 
-// captionController.deleteCaption = (req, res, next) => {};
+captionController.deleteCaption = (req, res, next) => {
+	const { id } = req.params;
+	console.log(id);
+
+	Caption.deleteOne({ _id: id })
+		.then(() => {
+			console.log('Data deleted');
+		})
+		.catch((e) => {
+			return next({
+				log: 'captionController.deleteCaption middleware error: check log for more details',
+				status: 400,
+				message: {
+					err: `${e}`,
+				},
+			});
+		});
+};
 
 module.exports = captionController;

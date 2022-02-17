@@ -25,6 +25,16 @@ function AddCaption() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		fetch('/api/captions', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				annotationId,
+				mood,
+			}),
+		});
 		setAnnotationId('');
 		setMood('');
 		console.log(annotationId, mood);

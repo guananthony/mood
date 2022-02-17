@@ -10,7 +10,7 @@ function CaptionFeed() {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				setCaptions(data);
+				setCaptions(data.reverse());
 				console.log(captions);
 			})
 			.catch((e) => console.log(e));
@@ -20,11 +20,12 @@ function CaptionFeed() {
 		return (
 			<CaptionCard
 				key={caption._id}
+				id={caption._id}
 				mood={caption.mood}
 				lyric={caption.lyric}
 				annotations={caption.annotations}
 				artist={caption.artist}
-				xs={{ my: 2 }}
+				shareUrl={caption.shareUrl}
 			/>
 		);
 	});
